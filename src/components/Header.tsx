@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { Button } from './ui/button';
+import RecruitForm from './RecruitForm';
 
 const Header = () => {
   return (
@@ -18,9 +19,7 @@ const Header = () => {
           </Link>
         </nav>
         <div className="space-x-6">
-          <Button className="bg-[#FFD700] text-[#333333] font-bold w-[120px] h-[40px]">
-            구인 하기
-          </Button>
+          <RecruitForm />
           <Button>로그인</Button>
         </div>
       </div>
