@@ -1,0 +1,77 @@
+'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+import { Button } from './ui/button';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from './ui/dialog';
+import { Form, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
+import { Input } from './ui/input';
+
+const FormSchema = z.object({
+  // type: z.enum(['hunt', 'quest', 'boss']),
+  title: z.string().min(2, {
+    message: '2글자 이상 입력해주세요.',
+  }),
+});
+
+const RecruitForm = () => {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      title: '',
+    },
+  });
+
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    console.log('data', data);
+    form.reset();
+  };
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className="bg-[#FFD700] text-[#333333] font-bold w-[120px] h-[40px]">
+          구인 하기
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>구인</DialogTitle>
+        </DialogHeader>
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            {/* 제목 */}
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>제목</FormLabel>
+                  <Input placeholder="제목을 입력하세요" {...field} />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex justify-between">
+              <Button type="submit">완료</Button>
+              <DialogClose asChild>
+                <Button type="button">취소</Button>
+              </DialogClose>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default RecruitForm;
