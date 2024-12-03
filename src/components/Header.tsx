@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
-import { Button } from './ui/button';
+
 import RecruitForm from './RecruitForm';
+
+import LoginButton from './LoginButton';
 
 const Header = () => {
   return (
@@ -20,7 +22,7 @@ const Header = () => {
         </nav>
         <div className="space-x-6">
           <RecruitForm />
-          <Button>로그인</Button>
+          <LoginButton />
         </div>
       </div>
     </header>
