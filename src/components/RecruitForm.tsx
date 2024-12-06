@@ -14,9 +14,10 @@ import {
 } from './ui/dialog';
 import { Form, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { Input } from './ui/input';
+import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 
 const FormSchema = z.object({
-  // type: z.enum(['hunt', 'quest', 'boss']),
+  party_type: z.enum(['사냥', '퀘스트', '보스']),
   title: z.string().min(2, {
     message: '2글자 이상 입력해주세요.',
   }),
@@ -26,11 +27,13 @@ const RecruitForm = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      party_type: '사냥',
       title: '',
     },
   });
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    const { party_type, title } = data;
     console.log('data', data);
     form.reset();
   };
@@ -48,7 +51,32 @@ const RecruitForm = () => {
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            {/* 파티 타입 */}
+            <FormField
+              control={form.control}
+              name="party_type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>파티 유형</FormLabel>
+                  <RadioGroup
+                    className="flex flex-row"
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    {['사냥', '퀘스트', '보스'].map((type) => (
+                      <div key={type} className="flex items-center gap-1">
+                        <RadioGroupItem value={type} />
+                        <FormLabel>{type}</FormLabel>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </FormItem>
+              )}
+            />
             {/* 제목 */}
             <FormField
               control={form.control}
