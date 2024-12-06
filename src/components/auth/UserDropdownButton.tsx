@@ -8,12 +8,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import { Profile } from '@/types/profiles.types';
 
-const UserDropdownButton = () => {
+interface UserDropdownButtonProps {
+  profile: Profile;
+}
+
+const UserDropdownButton = ({ profile }: UserDropdownButtonProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-[#588157] hover:bg-[#476947]">닉네임</Button>
+        <Button className="bg-[#588157] hover:bg-[#476947]">
+          {profile.username}
+        </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent>
