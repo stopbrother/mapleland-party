@@ -15,12 +15,14 @@ import {
 import { Form, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { Input } from './ui/input';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
+import { Textarea } from './ui/textarea';
 
 const FormSchema = z.object({
   party_type: z.enum(['사냥', '퀘스트', '보스']),
   title: z.string().min(2, {
     message: '2글자 이상 입력해주세요.',
   }),
+  description: z.string(),
 });
 
 const RecruitForm = () => {
@@ -29,11 +31,12 @@ const RecruitForm = () => {
     defaultValues: {
       party_type: '사냥',
       title: '',
+      description: '',
     },
   });
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    const { party_type, title } = data;
+    const { party_type, title, description } = data;
     console.log('data', data);
     form.reset();
   };
@@ -86,6 +89,17 @@ const RecruitForm = () => {
                   <FormLabel>제목</FormLabel>
                   <Input placeholder="제목을 입력하세요" {...field} />
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* 파티 설명 */}
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>파티 설명</FormLabel>
+                  <Textarea {...field} />
                 </FormItem>
               )}
             />
