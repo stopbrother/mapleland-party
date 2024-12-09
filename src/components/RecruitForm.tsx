@@ -16,6 +16,8 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { Input } from './ui/input';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Textarea } from './ui/textarea';
+import { addRecruit } from '@/api/recruit-api';
+import { useState } from 'react';
 
 const FormSchema = z.object({
   party_type: z.enum(['사냥', '퀘스트', '보스']),
@@ -26,6 +28,8 @@ const FormSchema = z.object({
 });
 
 const RecruitForm = () => {
+  const [open, setOpen] = useState(false);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -35,13 +39,16 @@ const RecruitForm = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    const { party_type, title, description } = data;
-    console.log('data', data);
+  const onSubmit = async (formData: z.infer<typeof FormSchema>) => {
+    // const { party_type, title, description } = data;
+    console.log('data', formData);
+    await addRecruit(formData);
+
+    setOpen(false);
     form.reset();
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="bg-[#FFD700] text-[#333333] font-bold w-[120px] h-[40px]">
           구인 하기
