@@ -3,7 +3,7 @@ import { createClient } from '../../utils/supabase/client';
 
 export async function signInWithDiscord() {
   const supabase = createClient();
-
+  console.log('next_base_url', process.env.NEXT_PUBLIC_BASE_URL);
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'discord',
     options: {
