@@ -9,6 +9,44 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      party_recruit: {
+        Row: {
+          created_by: string | null
+          created_date_time: string
+          description: string | null
+          id: string
+          party_type: string
+          title: string
+          updated_date_time: string | null
+        }
+        Insert: {
+          created_by?: string | null
+          created_date_time?: string
+          description?: string | null
+          id?: string
+          party_type?: string
+          title?: string
+          updated_date_time?: string | null
+        }
+        Update: {
+          created_by?: string | null
+          created_date_time?: string
+          description?: string | null
+          id?: string
+          party_type?: string
+          title?: string
+          updated_date_time?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "party_recruit_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null

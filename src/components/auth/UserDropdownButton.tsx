@@ -27,7 +27,7 @@ const UserDropdownButton = ({ profile }: UserDropdownButtonProps) => {
         <DropdownMenuItem>프로필</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Button onClick={signOut}>로그아웃</Button>
+          <Button onClick={() => signOut()}>로그아웃</Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
